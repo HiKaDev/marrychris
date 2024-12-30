@@ -26,6 +26,12 @@
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             animation: glow 2s infinite alternate;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 800px;
         }
 
         @keyframes glow {
@@ -60,6 +66,7 @@
             display: flex;
             gap: 2rem;
             margin-bottom: 2rem;
+            justify-content: center;
         }
 
         .time-block {
@@ -99,7 +106,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Firework Styles */
         .firework {
             position: absolute;
             width: 6px;
@@ -166,16 +172,40 @@
                 opacity: 0;
             }
         }
+
+        @media (max-width: 768px) {
+            .countdown {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .time-block {
+                min-width: 90px;
+                padding: 1rem;
+            }
+
+            .number {
+                font-size: 3rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .message {
+                font-size: 1.4rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>✨Feliz Ano Novo 2025! ✨</h1> 
         <h1>Termino De Contrato DRF Manaus Aeroporto</h1> 
-            <div class="countdown">
+        <div class="countdown">
             <div class="time-block">
-            <div class="number" id="days">00</div>
-            <div class="label">Dias</div>
+                <div class="number" id="days">00</div>
+                <div class="label">Dias</div>
             </div>
             <div class="time-block">
                 <div class="number" id="hours">00</div>
@@ -197,7 +227,6 @@
     </div>
 
     <script>
-        // Countdown Timer
         function updateCountdown() {
             const newYear = new Date('January 1, 2025 00:00:00').getTime();
             const now = new Date().getTime();
@@ -222,7 +251,6 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Enhanced Fireworks
         function createFirework() {
             const firework = document.createElement('div');
             firework.className = 'firework';
@@ -242,7 +270,6 @@
             
             document.body.appendChild(firework);
 
-            // Create particles
             const particleCount = 30;
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
@@ -264,7 +291,6 @@
                 setTimeout(() => particle.remove(), 1500);
             }
 
-            // Create sparkles
             for (let i = 0; i < 20; i++) {
                 setTimeout(() => {
                     const sparkle = document.createElement('div');
@@ -280,7 +306,6 @@
             setTimeout(() => firework.remove(), 1500);
         }
 
-        // Create fireworks more frequently
         setInterval(createFirework, 300);
     </script>
 </body>
