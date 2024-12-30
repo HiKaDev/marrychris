@@ -1,26 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contagem Regressiva 2025</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
+            margin: 0;
             min-height: 100vh;
+            background: linear-gradient(135deg, #000428, #004e92);
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            font-family: 'Orbitron', sans-serif;
-            background: #0a192f;
-            color: #64ffda;
+            justify-content: center;
+            font-family: 'Arial', sans-serif;
+            color: white;
             overflow: hidden;
             position: relative;
         }
@@ -28,217 +21,182 @@
         .container {
             text-align: center;
             z-index: 2;
-            padding: 3rem;
-            background: rgba(100, 255, 218, 0.05);
-            border-radius: 20px;
-            border: 1px solid rgba(100, 255, 218, 0.2);
-            backdrop-filter: blur(10px);
-            position: relative;
-            width: 90%;
-            max-width: 1200px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            }
+            to {
+                box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            }
         }
 
         h1 {
-            font-size: 3.5em;
-            margin-bottom: 1.5em;
-            text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGlow 2s infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            }
         }
 
         .countdown {
             display: flex;
-            gap: 2em;
-            justify-content: center;
-            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
-        .time-segment {
-            background: rgba(100, 255, 218, 0.1);
-            padding: 2em;
+        .time-block {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
             border-radius: 15px;
-            min-width: 180px;
-            border: 1px solid rgba(100, 255, 218, 0.2);
+            min-width: 120px;
+            backdrop-filter: blur(5px);
+            transform-style: preserve-3d;
+            transition: transform 0.3s;
+        }
+
+        .time-block:hover {
+            transform: translateY(-5px) rotateX(10deg);
         }
 
         .number {
-            font-size: 4em;
+            font-size: 4rem;
             font-weight: bold;
-            margin-bottom: 0.2em;
-            text-shadow: 0 0 20px rgba(100, 255, 218, 0.5);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         .label {
-            font-size: 1.2em;
+            font-size: 1.2rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
         }
 
+        .message {
+            font-size: 1.8rem;
+            margin-top: 2rem;
+            font-style: italic;
+            line-height: 1.5;
+            background: linear-gradient(45deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Firework Styles */
         .firework {
-            position: fixed;
-            pointer-events: none;
-            z-index: 1;
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
         }
 
-        .department-message {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(100, 255, 218, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            max-width: 800px;
-            width: 90%;
-            text-align: center;
-            border: 1px solid rgba(100, 255, 218, 0.2);
-            opacity: 0;
-            transition: all 1s ease;
-            z-index: 3;
+        .firework::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: inherit;
+            animation: explode 1.5s ease-out forwards;
         }
 
-        .department-message.show {
-            opacity: 1;
-            transform: translate(-50%, -20px);
-        }
-
-        .department-message h2 {
-            margin-bottom: 1rem;
-            font-size: 1.8em;
-            color: #64ffda;
-        }
-
-        .department-message p {
-            margin: 0.8rem 0;
-            line-height: 1.8;
-            font-size: 1.2em;
-            color: #fff;
-        }
-
-        .new-year-message {
-            font-size: 3em;
-            margin-top: 1em;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease;
-        }
-
-        .new-year-message.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2em; }
-            .countdown { gap: 1em; }
-            .time-segment { 
-                min-width: 140px;
-                padding: 1.5em;
+        @keyframes explode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
             }
-            .number { font-size: 2.5em; }
+            100% {
+                transform: scale(50);
+                opacity: 0;
+            }
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            animation: particle-burst 1.5s ease-out forwards;
+        }
+
+        @keyframes particle-burst {
+            0% {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty));
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 0.5s ease-out infinite;
+        }
+
+        @keyframes sparkle {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>2025</h1>
+        <h1>✨ Feliz Ano Novo 2025! ✨</h1>
         <div class="countdown">
-            <div class="time-segment">
+            <div class="time-block">
                 <div class="number" id="days">00</div>
                 <div class="label">Dias</div>
             </div>
-            <div class="time-segment">
+            <div class="time-block">
                 <div class="number" id="hours">00</div>
                 <div class="label">Horas</div>
             </div>
-            <div class="time-segment">
+            <div class="time-block">
                 <div class="number" id="minutes">00</div>
                 <div class="label">Minutos</div>
             </div>
-            <div class="time-segment">
+            <div class="time-block">
                 <div class="number" id="seconds">00</div>
                 <div class="label">Segundos</div>
             </div>
         </div>
-        <div class="new-year-message" id="new-year-message">
-            Feliz 2025!
+        <div class="message">
+            O Setor de Contratos deseja a todos um Ano Novo repleto de conquistas!<br>
+            Que 2025 seja um ano de sucesso, prosperidade e realizações! 🌟
         </div>
     </div>
 
-    <div class="department-message" id="department-message">
-        <h2>Mensagem do Setor de Contratos</h2>
-        <p>Iniciando uma nova fase em nossa jornada de inovação e excelência.</p>
-        <p>Que 2025 seja um ano de contratos prósperos e parcerias fortalecidas.</p>
-        <p>Juntos construiremos um futuro ainda mais brilhante!</p>
-    </div>
-
     <script>
-        const COLORS = [
-            '#FF3131', // Vermelho
-            '#39FF14', // Verde Neon
-            '#1F51FF', // Azul
-            '#FFD700', // Amarelo
-            '#FF1493', // Pink
-            '#00FFFF', // Ciano
-            '#FF4500', // Laranja
-            '#FF69B4', // Rosa
-            '#9400D3', // Violeta
-            '#7FFFD4'  // Aqua
-        ];
-
-        function createFirework() {
-            const firework = document.createElement('div');
-            firework.className = 'firework';
-            
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * (window.innerHeight * 0.6);
-            const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-            
-            firework.style.position = 'fixed';
-            firework.style.left = x + 'px';
-            firework.style.top = y + 'px';
-            firework.style.width = '6px';
-            firework.style.height = '6px';
-            firework.style.borderRadius = '50%';
-            firework.style.backgroundColor = color;
-            firework.style.boxShadow = `0 0 20px 4px ${color}`;
-            
-            document.body.appendChild(firework);
-
-            // Criar explosão
-            const particles = 20;
-            for (let i = 0; i < particles; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'firework';
-                
-                const angle = (i / particles) * Math.PI * 2;
-                const velocity = 100;
-                const particleX = x + Math.cos(angle) * velocity;
-                const particleY = y + Math.sin(angle) * velocity;
-                
-                particle.style.position = 'fixed';
-                particle.style.left = x + 'px';
-                particle.style.top = y + 'px';
-                particle.style.width = '3px';
-                particle.style.height = '3px';
-                particle.style.borderRadius = '50%';
-                particle.style.backgroundColor = color;
-                particle.style.boxShadow = `0 0 10px 2px ${color}`;
-                particle.style.transition = 'all 1s ease-out';
-                
-                document.body.appendChild(particle);
-                
-                requestAnimationFrame(() => {
-                    particle.style.left = particleX + 'px';
-                    particle.style.top = particleY + 'px';
-                    particle.style.opacity = '0';
-                });
-                
-                setTimeout(() => particle.remove(), 1000);
-            }
-            
-            setTimeout(() => firework.remove(), 1000);
-        }
-
+        // Countdown Timer
         function updateCountdown() {
             const newYear = new Date('January 1, 2025 00:00:00').getTime();
             const now = new Date().getTime();
@@ -258,20 +216,71 @@
             document.getElementById('hours').innerText = h.toString().padStart(2, '0');
             document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
             document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
-
-            if (gap <= 0) {
-                document.getElementById('new-year-message').classList.add('show');
-                document.getElementById('department-message').classList.add('show');
-                if (!window.fireworksInterval) {
-                    window.fireworksInterval = setInterval(createFirework, 300);
-                }
-            }
         }
 
-        // Inicialização
-        setInterval(createFirework, 1000);
         setInterval(updateCountdown, 1000);
         updateCountdown();
+
+        // Enhanced Fireworks
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * (window.innerHeight * 0.6);
+            
+            const colors = [
+                '#ff0000', '#ffd700', '#00ff00', '#0000ff', 
+                '#ff00ff', '#00ffff', '#ff4500', '#7fff00'
+            ];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            firework.style.left = `${x}px`;
+            firework.style.top = `${y}px`;
+            firework.style.backgroundColor = color;
+            
+            document.body.appendChild(firework);
+
+            // Create particles
+            const particleCount = 30;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.backgroundColor = color;
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                
+                const angle = (i / particleCount) * 360;
+                const velocity = 100 + Math.random() * 50;
+                const tx = Math.cos(angle * Math.PI / 180) * velocity;
+                const ty = Math.sin(angle * Math.PI / 180) * velocity;
+                
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 1500);
+            }
+
+            // Create sparkles
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = `${x + (Math.random() - 0.5) * 100}px`;
+                    sparkle.style.top = `${y + (Math.random() - 0.5) * 100}px`;
+                    document.body.appendChild(sparkle);
+                    
+                    setTimeout(() => sparkle.remove(), 500);
+                }, Math.random() * 1500);
+            }
+
+            setTimeout(() => firework.remove(), 1500);
+        }
+
+        // Create fireworks more frequently
+        setInterval(createFirework, 300);
     </script>
 </body>
 </html>
